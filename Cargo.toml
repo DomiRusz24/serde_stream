@@ -7,6 +7,7 @@ description = "Adds serde serialization and deserialization functionality to str
 license = "GPL-3.0-or-later"
 keywords = ["serde", "stream"]
 categories = ["parsing"]
+repository = "https://github.com/DomiRusz24/serde_stream"
 
 
 [features]
