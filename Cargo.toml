@@ -1,0 +1,25 @@
+[package]
+name = "serde_stream"
+version = "0.1.0"
+authors = ["DomiRusz24"]
+edition = "2021"
+description = "Adds serde serialization and deserialization functionality to streams."
+license = "GPL-3.0-or-later"
+keywords = ["serde", "stream"]
+categories = ["parsing"]
+
+
+[features]
+tokio = ["dep:tokio", "dep:async-trait"]
+std = []
+
+
+[dependencies]
+rmp-serde = "1.1.1"
+serde = { version = "1.0.171", features = ["derive"] }
+thiserror = "1.0.43"
+tokio = { version = "1.29.1", optional = true, features = ["io-util"] }
+async-trait = { version = "0.1.71", optional = true }
+
+[dev-dependencies]
+tokio = { version = "1.29.1", features = ["net"] }
