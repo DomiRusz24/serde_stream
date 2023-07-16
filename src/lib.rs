@@ -1,8 +1,17 @@
+//!
+//! This library adds SerdeRead and SerdeWrite, both for std and tokio variants.
+//!
+//! [std]: crate::std_stream
+//! [tokio]: crate::tokio_stream
+//!
+//! It uses MessagePack (https://crates.io/crates/rmp-serde) for both serialization and deserialization.
+//!
+//! Before sending the serialized data, it sends the amount of bytes that will be sent.
+//!
+
 use thiserror::Error;
 use std::io;
 use rmp_serde::{encode, decode};
-
-
 
 #[derive(Error, Debug)]
 pub enum Error {
@@ -26,6 +35,8 @@ pub mod std_stream {
     use serde::Serialize;
     use crate::Error;
 
+    /// Fetch and deserialize given object from stream.
+    ///
     /// # Example
     ///
     /// ```edition2021
@@ -53,6 +64,8 @@ pub mod std_stream {
         fn read_obj<T: DeserializeOwned>(&mut self, max_size: usize) -> Result<T, Error>;
     }
 
+    /// Serialize given object, and send it through the stream.
+    ///
     /// # Example
     ///
     /// ```no_run
@@ -119,6 +132,11 @@ pub mod tokio_stream {
     use tokio::io::{AsyncReadExt, AsyncWriteExt};
     use crate::Error;
 
+
+    /// Fetch and deserialize given object from stream.
+    ///
+    /// #Example
+    ///
     /// ```no_run
     /// use serde::Deserialize;
     /// use tokio::net::TcpStream;
@@ -147,6 +165,10 @@ pub mod tokio_stream {
         async fn read_obj<T: DeserializeOwned>(&mut self, max_size: usize) -> Result<T, Error>;
     }
 
+    /// Serialize given object, and send it through the stream.
+    ///
+    /// #Example
+    ///
     /// ```no_run
     /// use serde::Serialize;
     /// use tokio::net::TcpStream;
